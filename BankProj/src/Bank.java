@@ -1,149 +1,144 @@
 import java.util.Scanner;
 
+import acc.Account;
+import acc.SpecialAccount;
+
 public class Bank {
 	Account[] accs = new Account[100];
 	int cnt;
 	Scanner sc = new Scanner(System.in);
-
+	
 	int selectMenu() {
-		System.out.println("[ì½”ìŠ¤íƒ€ ì€í–‰]");
-		System.out.println("1.ê³„ì¢Œê°œì„¤");
-		System.out.println("2.ì…ê¸ˆ");
-		System.out.println("3.ì¶œê¸ˆ");
-		System.out.println("4.ê³„ì¢Œì¡°íšŒ");
-		System.out.println("5.ì „ì²´ê³„ì¢Œì¡°íšŒ");
-		System.out.println("6.ê³„ì¢Œì´ì²´");
-		System.out.println("0.ì¢…ë£Œ");
-		System.out.print(" ì„ íƒ>> ");
-		int sel =  Integer.parseInt(sc.nextLine());
-		System.out.println();
+		System.out.println("[ÄÚ½ºÅ¸ ÀºÇà]");
+		System.out.println("1.°èÁÂ°³¼³");
+		System.out.println("2.ÀÔ±İ");
+		System.out.println("3.Ãâ±İ");
+		System.out.println("4.°èÁÂÁ¶È¸");
+		System.out.println("5.ÀüÃ¼°èÁÂÁ¶È¸");
+		System.out.println("6.°èÁÂÀÌÃ¼");
+		System.out.println("0.Á¾·á");
+		System.out.print("¼±ÅÃ>>");
+		int sel = Integer.parseInt(sc.nextLine());
 		return sel;
-		
-
-	}
-
-	void makeAccount() {
-		System.out.println("[ê³„ì¢Œê°œì„¤]");
-		System.out.print("ê³„ì¢Œë²ˆí˜¸: ");
-		String id = sc.nextLine();
-		System.out.print("ì´ë¦„:");
-		String name = sc.nextLine();
-		System.out.print("ì…ê¸ˆì•¡: ");
-		int money = Integer.parseInt(sc.nextLine());
-		Account acc = new Account(id, name, money);
-//		Account acc = new Account();
-//		acc.id=id;
-//		acc.name=name;
-//		acc.balance=money;
-		accs[cnt++] = acc; //0ë²ˆì§¸ì— accê°€ ë“¤ì´ê°
-		System.out.println("ê³„ì¢Œê°€ ê°œì„¤ë˜ì—ˆìŠµë‹ˆë‹¤.");
-		System.out.println();
 	}
 	
-	Account searchAccById(String id){
-		Account acc =null;
+	void selMakeAccount() {
+		System.out.println("[°èÁÂ°³¼³]");
+		System.out.println("1.ÀÏ¹İ°èÁÂ");
+		System.out.println("2.Æ¯¼ö°èÁÂ");
+		System.out.print("¼±ÅÃ>>");
+		int sel = Integer.parseInt(sc.nextLine());
+		if(sel==1) makeAccount();
+		else if(sel==2) makeSpecialAccount();
+	}
+	
+	void makeAccount() {
+		System.out.println("[ÀÏ¹İ°èÁÂ°³¼³]");
+		System.out.print("°èÁÂ¹øÈ£:");
+		String id = sc.nextLine();
+		System.out.print("ÀÌ¸§:");
+		String name = sc.nextLine();
+		System.out.print("ÀÔ±İ¾×:");
+		int money = Integer.parseInt(sc.nextLine());
+		Account acc = new Account(id,name,money);
+		accs[cnt++] = acc;		
+	}
+	
+	void makeSpecialAccount() {
+		System.out.println("[Æ¯¼ö°èÁÂ°³¼³]");
+		System.out.print("°èÁÂ¹øÈ£:");
+		String id = sc.nextLine();
+		System.out.print("ÀÌ¸§:");
+		String name = sc.nextLine();
+		System.out.print("ÀÔ±İ¾×:");
+		int money = Integer.parseInt(sc.nextLine());
+		System.out.print("µî±Ş(VIP,Gold,Silver,Normal):");
+		String grade =sc.nextLine();
+		Account acc = new SpecialAccount(id,name,money,grade);
+		accs[cnt++] = acc;		
+	}
+
+	Account searchAccById(String id) {
+		Account acc = null;
 		for(int i=0; i<cnt; i++) {
-			if(accs[i].id.equals(id)) {
-				acc=accs[i];
+			if(accs[i].getId().equals(id)) {
+				acc = accs[i];
 				break;
 			}
 		}
 		return acc;
-		
 	}
-
+	
 	void deposit() {
-		System.out.println("[ì…ê¸ˆ]");
-		System.out.print("ê³„ì¢Œë²ˆí˜¸:");
+		System.out.println("[ÀÔ±İ]");
+		System.out.print("°èÁÂ¹øÈ£:");
 		String id = sc.nextLine();
-		//ê³„ì¢Œë¥¼ accsì—ì„œ ì°¾ëŠ”ë‹¤
+		//°èÁÂ¸¦ accs¿¡¼­ Ã£´Â´Ù
 		Account acc = searchAccById(id);
 		if(acc==null) {
-			System.out.println("ê³„ì¢Œë²ˆí˜¸ê°€ ì—†ê±°ë‚˜ í‹€ë¦½ë‹ˆë‹¤. ë‹¤ì‹œ ì„ íƒí•˜ì„¸ìš”.");
-			System.out.println();
+			System.out.println("°èÁÂ¹øÈ£°¡ Æ²¸³´Ï´Ù.");
 			return;
 		}
-		System.out.print("ì…ê¸ˆì•¡:");
+		System.out.print("ÀÔ±İ¾×:");
 		int money = Integer.parseInt(sc.nextLine());
 		acc.deposit(money);
-		//acc.balance += money;
-		System.out.println("ê³„ì¢Œ ì”ì•¡:"+acc.balance+"ì›");
-		System.out.println();		
 	}
-
+	
 	void withdraw() {
-		System.out.println("[ì¶œê¸ˆ]");
-		System.out.print("ê³„ì¢Œë²ˆí˜¸:");
+		System.out.println("[Ãâ±İ]");
+		System.out.print("°èÁÂ¹øÈ£");
 		String id = sc.nextLine();
-		Account acc =searchAccById(id);
+		Account acc = searchAccById(id);
 		if(acc==null) {
-			System.out.println("ê³„ì¢Œë²ˆí˜¸ê°€ ì—†ê±°ë‚˜ í‹€ë¦½ë‹ˆë‹¤. ë‹¤ì‹œ ì„ íƒí•˜ì„¸ìš”.");
-			System.out.println();
+			System.out.println("°èÁÂ¹øÈ£°¡ Æ²¸³´Ï´Ù.");
 			return;
 		}
-		System.out.print("ì¶œê¸ˆì•¡:");
+		System.out.print("Ãâ±İ¾×:");
 		int money = Integer.parseInt(sc.nextLine());
 		acc.withdraw(money);
-		//acc.balance -= money;
-		System.out.println("ê³„ì¢Œ ì”ì•¡:"+acc.balance+"ì›");
-		System.out.println();
-		
 	}
-
+	
 	void accInfo() {
-		System.out.println("[ê³„ì¢Œì •ë³´]");
-		System.out.print("ê³„ì¢Œë²ˆí˜¸: ");
+		System.out.println("[°èÁÂÁ¶È¸]");
+		System.out.print("°èÁÂ¹øÈ£:");
 		String id = sc.nextLine();
-		Account acc =searchAccById(id);
+		Account acc = searchAccById(id);
 		if(acc==null) {
-			System.out.println("ê³„ì¢Œë²ˆí˜¸ê°€ ì—†ê±°ë‚˜ í‹€ë¦½ë‹ˆë‹¤. ë‹¤ì‹œ ì„ íƒí•˜ì„¸ìš”.");
-			System.out.println();
+			System.out.println("°èÁÂ¹øÈ£°¡ Æ²¸³´Ï´Ù.");
 			return;
 		}
-		
-		System.out.println(acc.info());
+		System.out.println(acc);
 	}
-
-	void allAccInfo() {
-		System.out.println("[ì „ì²´ê³„ì¢Œì¡°íšŒ]");
-		for(int i=0;i<cnt;i++) {
-			System.out.println(accs[i].info());
-		}
-		
-	}
-
+	
 	void transfer() {
-		System.out.println("[ê³„ì¢Œì´ì²´]");
-		
-		System.out.print("ë³´ë‚´ëŠ” ê³„ì¢Œë²ˆí˜¸:");
+		System.out.println("[°èÁÂÀÌÃ¼]");
+		System.out.print("º¸³»´Â °èÁÂ¹øÈ£:");
 		String sid = sc.nextLine();
 		Account sacc = searchAccById(sid);
 		if(sacc==null) {
-			System.out.println("ë³´ë‚´ëŠ” ê³„ì¢Œë²ˆí˜¸ê°€ ì—†ê±°ë‚˜ í‹€ë¦½ë‹ˆë‹¤. ë‹¤ì‹œ ì„ íƒí•˜ì„¸ìš”.");
-			System.out.println();
+			System.out.println("º¸³»´Â °èÁÂ¹øÈ£°¡ Æ²¸³´Ï´Ù.");
 			return;
 		}
-		
-		System.out.println("ë°›ëŠ” ê³„ì¢Œë²ˆí˜¸:");
+		System.out.print("¹Ş´Â °èÁÂ¹øÈ£:");
 		String rid = sc.nextLine();
 		Account racc = searchAccById(rid);
 		if(racc==null) {
-			System.out.println("ë°›ëŠ” ê³„ì¢Œë²ˆí˜¸ê°€ ì—†ê±°ë‚˜ í‹€ë¦½ë‹ˆë‹¤. ë‹¤ì‹œ ì„ íƒí•˜ì„¸ìš”.");
-			System.out.println();
+			System.out.println("¹Ş´Â °èÁÂ¹øÈ£°¡ Æ²¸³´Ï´Ù.");
 			return;
 		}
-		
-		System.out.println("ì´ì²´ê¸ˆì•¡:");
-		int money =Integer.parseInt(sc.nextLine());
+		System.out.print("ÀÌÃ¼±İ¾×:");
+		int money = Integer.parseInt(sc.nextLine());
 		if(!sacc.withdraw(money)) {
-			System.out.println("ê³„ì¢Œ ì”ì•¡ì´ ë¶€ì¡±í•©ë‹ˆë‹¤.");
-			System.out.println();
+			System.out.println("ÀÜ¾×ÀÌ ºÎÁ·ÇÕ´Ï´Ù.");
 			return;
 		}
-		racc.deposit(money);
-		
+		racc.deposit(money);		
 	}
 	
-
-
+	void allAccInfo() {
+		System.out.println("[ÀüÃ¼°èÁÂÁ¶È¸]");
+		for(int i=0; i<cnt; i++) {
+			System.out.println(accs[i]);
+		}
+	}
 }
