@@ -1,0 +1,5 @@
+package exc;
+
+public enum ERR_CODE {
+	ACCID_ERR,DOUBLEID_ERR,DEPOSIT_ERR,WITHDRAW_ERR,MENU_ERR
+}

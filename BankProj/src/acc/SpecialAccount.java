@@ -1,5 +1,7 @@
 package acc;
 
+import exc.BankException;
+
 public class SpecialAccount extends Account {
 	String grade;
 	public SpecialAccount(String id,String name,int money,String grade) {
@@ -21,7 +23,7 @@ public class SpecialAccount extends Account {
 	}
 	
 	@Override
-	public boolean deposit(int money) {
+	public boolean deposit(int money) throws BankException {
 		int inmoney = money;
 		switch(grade.toUpperCase()) {
 		case "VIP": inmoney += (int)(inmoney*0.04); break;
